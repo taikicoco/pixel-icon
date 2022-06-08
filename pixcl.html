@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>exsample</title>
+    <src 
+</head>
+<body>
+    <canvas id="canvas" width="200" height="200"></canvas>
+    <canvas id="canvas2" width="200" height="200"></canvas>
+    <button id="download">download</button>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = 'green';
+        ctx.fillRect(0, 0, 200, 200);
+
+        const canvas2 = document.getElementById('canvas2');
+        const ctx2 = canvas2.getContext('2d');
+        ctx2.fillStyle = 'red';
+        ctx2.fillRect(0, 0, 200, 200);
+
+
+        document.getElementById("download").onclick = (event) => {
+        let canvas = document.getElementById("canvas");
+
+        let link = document.createElement("a");
+        link.href = canvas.toDataURL("image/png");
+        link.download = "test.png";
+        link.click();
+        }
+    </script>
+    <style>
+        canvas { border: 1px solid black; }
+      </style>
+</body>
+</html>
+
+
