@@ -14,18 +14,111 @@
     <script>
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
-        ctx.fillStyle = 'green';
-        ctx.fillRect(0, 0, 200, 200);
+       
+        const width = 200;
+        const height  = 200;
+        const size = 6;
+        let bit_size = width/size;
+        let n = 0;
+        let position = [];
+        console.log(bit_size)
 
-        const canvas2 = document.getElementById('canvas2');
-        const ctx2 = canvas2.getContext('2d');
-        ctx2.fillStyle = 'red';
-        ctx2.fillRect(0, 0, 200, 200);
+        for (let i = 0; i < 6; i++) {
+            position.push(n);
+            n = n + bit_size;
+        }
+
+        for (let j = 0; j < 6; j++) {
+            for (let k = 0; k < 6; k++) {
+                ctx.fillStyle = 'black';
+                ctx.fillRect(position[j], position[k], bit_size, bit_size);
+            }
+        }
+
+        // ctx.fillStyle = 'black';
+        // ctx.fillRect(0, 0, bit_size, bit_size);
+        // ctx.fillStyle = 'white';
+        // ctx.fillRect(0, position[0], bit_size, bit_size);
+        // ctx.fillStyle = 'black';
+        // ctx.fillRect(0, position[1], bit_size, bit_size);
+        // ctx.fillStyle = 'white';
+        // ctx.fillRect(0, position[2], bit_size, bit_size);
+        // ctx.fillStyle = 'black';
+        // ctx.fillRect(0, position[3], bit_size, bit_size);
+        // ctx.fillStyle = 'white';
+        // ctx.fillRect(0, position[4], bit_size, bit_size);
+       
+        // ctx.fillStyle = 'white';
+        // ctx.fillRect(position[0], 0, bit_size, bit_size);
+        // ctx.fillStyle = 'black';
+        // ctx.fillRect(position[0], position[0], bit_size, bit_size);
+        // ctx.fillStyle = 'white';
+        // ctx.fillRect(position[0], position[1], bit_size, bit_size);
+        // ctx.fillStyle = 'black';
+        // ctx.fillRect(position[0], position[2], bit_size, bit_size);
+        // ctx.fillStyle = 'white';
+        // ctx.fillRect(position[0], position[3], bit_size, bit_size);
+        // ctx.fillStyle = 'black';
+        // ctx.fillRect(position[0], position[4], bit_size, bit_size);
+
+        // ctx.fillStyle = 'black';
+        // ctx.fillRect(position[1], 0, bit_size, bit_size);
+        // ctx.fillStyle = 'white';
+        // ctx.fillRect(position[1], position[0], bit_size, bit_size);
+        // ctx.fillStyle = 'black';
+        // ctx.fillRect(position[1], position[1], bit_size, bit_size);
+        // ctx.fillStyle = 'white';
+        // ctx.fillRect(position[1], position[2], bit_size, bit_size);
+        // ctx.fillStyle = 'black';
+        // ctx.fillRect(position[1], position[3], bit_size, bit_size);
+        // ctx.fillStyle = 'white';
+        // ctx.fillRect(position[1], position[4], bit_size, bit_size);
+
+        // ctx.fillStyle = 'white';
+        // ctx.fillRect(position[2], 0, bit_size, bit_size);
+        // ctx.fillStyle = 'black';
+        // ctx.fillRect(position[2], position[0], bit_size, bit_size);
+        // ctx.fillStyle = 'white';
+        // ctx.fillRect(position[2], position[1], bit_size, bit_size);
+        // ctx.fillStyle = 'black';
+        // ctx.fillRect(position[2], position[2], bit_size, bit_size);
+        // ctx.fillStyle = 'white';
+        // ctx.fillRect(position[2], position[3], bit_size, bit_size);
+        // ctx.fillStyle = 'black';
+        // ctx.fillRect(position[2], position[4], bit_size, bit_size);
+
+
+        // ctx.fillStyle = 'black';
+        // ctx.fillRect(position[3], 0, bit_size, bit_size);
+        // ctx.fillStyle = 'white';
+        // ctx.fillRect(position[3], position[0], bit_size, bit_size);
+        // ctx.fillStyle = 'black';
+        // ctx.fillRect(position[3], position[1], bit_size, bit_size);
+        // ctx.fillStyle = 'white';
+        // ctx.fillRect(position[3], position[2], bit_size, bit_size);
+        // ctx.fillStyle = 'black';
+        // ctx.fillRect(position[3], position[3], bit_size, bit_size);
+        // ctx.fillStyle = 'white';
+        // ctx.fillRect(position[3], position[4], bit_size, bit_size);
+
+        // ctx.fillStyle = 'white';
+        // ctx.fillRect(position[4], 0, bit_size, bit_size);
+        // ctx.fillStyle = 'black';
+        // ctx.fillRect(position[4], position[0], bit_size, bit_size);
+        // ctx.fillStyle = 'white';
+        // ctx.fillRect(position[4], position[1], bit_size, bit_size);
+        // ctx.fillStyle = 'black';
+        // ctx.fillRect(position[4], position[2], bit_size, bit_size);
+        // ctx.fillStyle = 'white';
+        // ctx.fillRect(position[4], position[3], bit_size, bit_size);
+        // ctx.fillStyle = 'black';
+        // ctx.fillRect(position[4], position[4], bit_size, bit_size);
+
+      
 
 
         document.getElementById("download").onclick = (event) => {
         let canvas = document.getElementById("canvas");
-
         let link = document.createElement("a");
         link.href = canvas.toDataURL("image/png");
         link.download = "test.png";
