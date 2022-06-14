@@ -1,20 +1,17 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
   <HelloWorld msg="Vue.js "/>
-  <Dotpng></Dotpng>
-  <Dotred></Dotred>
+  <CreatePixel></CreatePixel>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
-import Dotpng from './components/Dotpng.vue'
-import Dotred from './components/Dotred.vue'
+import CreatePixel from './components/CreatePixel.vue'
 export default {
   name: 'App',
   components: {
     HelloWorld,
-    Dotpng,
-    Dotred
+    CreatePixel,
   }
 }
 </script>
