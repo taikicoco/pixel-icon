@@ -1,19 +1,45 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Vue.js "/>
-  <CreatePixel></CreatePixel>
+  <h2>AI Pixel Art</h2>
+  <button v-on:click="create_pixel()">create_pixel</button>
+  <br>
+  <template v-if="show">
+    <CreatePixel :pixel_value="pixel_value"></CreatePixel>
+  </template>
+  
+  
+
+  
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
 import CreatePixel from './components/CreatePixel.vue'
-export default {
-  name: 'App',
-  components: {
-    HelloWorld,
-    CreatePixel,
+
+
+  export default {
+    name: 'App',
+    components: {
+      CreatePixel,
+     
+    },
+    data() {
+      return {
+          pixel_value:[],
+          show:false
+      }
+    },
+
+    methods: {
+      create_pixel:function() {
+        this.show = true;
+        if(this.pixel_value.length < 15) {
+          for (let i = 0; i < 15; i++) {
+          this.pixel_value.push(i)
+        }
+        }
+      },
+    }
   }
-}
 </script>
 
 <style>

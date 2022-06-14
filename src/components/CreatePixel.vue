@@ -1,24 +1,30 @@
 <template>
-    <canvas id="pixel" width="200" height="200"></canvas>
-    <canvas id="pixel2" width="200" height="200"></canvas>
-    <canvas v-if="cross_key"  id="pixel3" width="200" height="200"></canvas>
-    <br>
-    <button v-on:click="download_pixel()" >download</button>
+    
     <button v-on:click="create_pixel()" >create</button>
-    <button v-on:click="cross_pixel()" >cross</button>
+    <br>
+    <canvas v-for="(key, i) in pixel_value"
+        :key = "key"
+        :id = "i"
+        :width="200" 
+        :height="200"
+    ></canvas>
+    
 </template>
 <script>
     export default {
         props: {
-          
+          pixel_value:Array,
         },
 
+       
         data() {
             return {
                 individual : {},
                 new_individual : {},
                 size:8,
-                cross_key:false
+                cross_key:true,
+                pixel : [],
+                button:false
             };
         },
         
@@ -28,15 +34,15 @@
     
         methods: {
             create_pixel:function() {
-                this.create("pixel");
-                this.create("pixel2");
+                for(let i = 0; i < 15; i++) {
+                    this.create(i);
+                }
             },
 
             cross_pixel:function() {
+                this.cross_key == true;
                 let cross = this.cross(this.individual["pixel"],this.individual["pixel2"]);
                 this.create("pixel3",cross);
-                this.cross_key == true;
-                console.log(this.cross_key);
             },
 
             download_pixel:function() {
@@ -54,18 +60,16 @@
                 let n = 0;
                 let position = [];
                 let individual = new_individual;
-                console.log(individual)
+          
 
                 if (individual.length == 0) {
                     //個体値の配列をランダムで生成
                     for (let i = 0; i < size*size/2; i++) {
                     individual.push(Math.floor(Math.random()*2));
                     }
-                    console.log('if')
                 }
                 
                 this.individual[id] = individual;
-                console.log(individual,id)
 
                 //canvasをグリットに区切るための配列
                 for (let i = 0; i < size; i++) {
@@ -117,7 +121,6 @@
                 new_soluton.push((id1.slice(0,thres)));
                 new_soluton.push((id2.slice(thres)));
                 new_soluton = new_soluton.flat();
-                console.log(new_soluton)
                 return new_soluton;
             },
 
@@ -133,5 +136,10 @@
 </script>
 
 <style>
-    canvas { border: 1px solid black; }
+    canvas { 
+        margin: 40px;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+        border-radius: 15px;
+     }
 </style>
+
