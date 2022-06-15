@@ -5,20 +5,28 @@
     >Create</button>
 
     <div v-if="show_b">
+        <div>
+            <button v-on:click="create_pixel()" 
+            class="button-30" role="button"
+            >Create</button>
 
-        <button v-on:click="create_pixel()" 
-        class="button-30" role="button"
-        >Create</button>
+            <button v-on:click="cross_modal()" 
+            class="button-30" role="button"
+            >Cross</button>
 
-        <button v-on:click="create_pixel()" 
-        class="button-30" role="button"
-        >Cross</button>
+            <button v-on:click="create_pixel()" 
+            class="button-30" role="button"
+            >evolution</button>
+        </div>
 
-        <button v-on:click="create_pixel()" 
-        class="button-30" role="button"
-        >evolution</button>
-
+        <cross-pixel v-if="cross_show" ref="hoge"
+            :cross_individual="cross_individual"
+        ></cross-pixel>
     </div>
+
+    
+
+    
 
     <!-- <button v-on:click="create_pixel()" 
     class="button-30" role="button"
@@ -28,34 +36,45 @@
     <canvas v-for="(key, i) in pixel_value"
         :key = "key"
         :id = "i"
-        :width="150" 
-        :height="150"
+        width="150" 
+        height="150"
+        v-on:click='reverse(i)'
     ></canvas>
     
 </template>
 <script>
+import CrossPixel  from './CrossPixel.vue'
+
     export default {
-        props: {
-          pixel_value:Array,
+        components:{
+            CrossPixel
         },
-       
+    
+        props: {
+            pixel_value:Array,
+        },
+        
         data() {
             return {
                 individual : {},
                 new_individual : {},
+                cross_individual:{},
                 size:8,
                 cross_key:true,
                 pixel : [],
                 button:false,
                 show_b:false,
                 show_c:true,
+                cross_show:false,
+                cross_cunt:1,
+                cross_cunt_c:1,
             };
         },
         
         computed: {
             
         },
-    
+
         methods: {
 
             create_pixel:function() {
@@ -63,14 +82,37 @@
                     this.push(i);
                 }
             },
-
             push(i) {
                 this.create(i);
+            },
+
+            reverse:function(i) {
+                //this.cross_individual[i] = this.individual[i]
+                if (this.cross_cunt_c%2 == 0){
+                    this.cross_individual[0] = this.individual[i]
+                    this.$refs.hoge.create(2,Object.values(this.cross_individual[0]));
+                }else{
+                    this.cross_individual[1] = this.individual[i]
+                    this.$refs.hoge.create(1,Object.values(this.cross_individual[1]));
+                } 
+                
+                this.cross_cunt_c += 1
+                
             },
 
             show: function() {
                 this.show_b = true;
                 this.show_c = false;
+            },
+            cross_modal:function() {
+                if(this.cross_cunt%2 == 1){
+                    this.cross_show = true;
+                }else{
+                    this.cross_show = false;
+                }
+
+                this.cross_cunt += 1;
+                
             },
 
             cross_pixel:function() {
@@ -98,7 +140,7 @@
                 let n = 0;
                 let position = [];
                 let individual = new_individual;
-          
+        
 
                 if (individual.length == 0) {
                     //個体値の配列をランダムで生成
@@ -107,6 +149,7 @@
                     }
                 }
                 
+                console.log(individual,'T')
                 this.individual[id] = individual;
 
                 //canvasをグリットに区切るための配列
