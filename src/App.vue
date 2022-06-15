@@ -1,43 +1,34 @@
 <template>
-  <h2>AI Pixel Art</h2>
-  <button v-on:click="create_pixel()">create_pixel</button>
+  <h2>AI Pixel icon</h2>
   <br>
-  <template v-if="show">
-    <CreatePixel :pixel_value="pixel_value"></CreatePixel>
-  </template>
-  
-  
-
-  
+  <create-pixel 
+    :pixel_value="pixel_value"
+  ></create-pixel>
 </template>
 
 <script>
 
 import CreatePixel from './components/CreatePixel.vue'
 
-
   export default {
     name: 'App',
     components: {
       CreatePixel,
-     
     },
     data() {
       return {
-          pixel_value:[],
-          show:false
+          pixel_value:[0,1,2,3,4,5,6,7,8,9,10,11],
       }
     },
 
     methods: {
-      create_pixel:function() {
-        this.show = true;
-        if(this.pixel_value.length < 15) {
-          for (let i = 0; i < 15; i++) {
-          this.pixel_value.push(i)
-        }
-        }
+
+      window:onload = function() {  
       },
+
+      create_pixel:function() {
+      },
+
     }
   }
 </script>
