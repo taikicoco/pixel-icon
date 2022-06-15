@@ -1,12 +1,35 @@
 <template>
     
-    <button v-on:click="create_pixel()" >create</button>
+    <button v-if="show_c" v-on:click="create_pixel(),show()" 
+    class="button-30" role="button"
+    >Create</button>
+
+    <div v-if="show_b">
+
+        <button v-on:click="create_pixel()" 
+        class="button-30" role="button"
+        >Create</button>
+
+        <button v-on:click="create_pixel()" 
+        class="button-30" role="button"
+        >Cross</button>
+
+        <button v-on:click="create_pixel()" 
+        class="button-30" role="button"
+        >evolution</button>
+
+    </div>
+
+    <!-- <button v-on:click="create_pixel()" 
+    class="button-30" role="button"
+    >Dowunload</button> -->
+
     <br>
     <canvas v-for="(key, i) in pixel_value"
         :key = "key"
         :id = "i"
-        :width="200" 
-        :height="200"
+        :width="150" 
+        :height="150"
     ></canvas>
     
 </template>
@@ -15,7 +38,6 @@
         props: {
           pixel_value:Array,
         },
-
        
         data() {
             return {
@@ -24,7 +46,9 @@
                 size:8,
                 cross_key:true,
                 pixel : [],
-                button:false
+                button:false,
+                show_b:false,
+                show_c:true,
             };
         },
         
@@ -33,10 +57,20 @@
         },
     
         methods: {
+
             create_pixel:function() {
-                for(let i = 0; i < 15; i++) {
-                    this.create(i);
+                for(let i = 0; i < this.pixel_value.length; i++) {
+                    this.push(i);
                 }
+            },
+
+            push(i) {
+                this.create(i);
+            },
+
+            show: function() {
+                this.show_b = true;
+                this.show_c = false;
             },
 
             cross_pixel:function() {
@@ -48,12 +82,16 @@
             download_pixel:function() {
                 this.download("pixel");
             },
+
+            fuga:function() {
+                console.log('test')
+            },
             
             //create_pixel
             create(id, new_individual = []) {
                 const canvas = document.getElementById(id);
                 const ctx = canvas.getContext('2d');
-                const width = 200;
+                const width = 150;
                 //const height  = 200;
                 const size = this.size;
                 let bit_size = width/size;
@@ -141,5 +179,56 @@
         box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
         border-radius: 15px;
      }
+
+     button {
+        margin: 30px;
+        width: 150px;
+     }
+
+     /* CSS */
+    .button-30 {
+        align-items: center;
+        appearance: none;
+        background-color: #FCFCFD;
+        border-radius: 4px;
+        border-width: 0;
+        box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
+        box-sizing: border-box;
+        color: #36395A;
+        cursor: pointer;
+        display: inline-flex;
+        font-family: "JetBrains Mono",monospace;
+        height: 48px;
+        justify-content: center;
+        line-height: 1;
+        list-style: none;
+        overflow: hidden;
+        padding-left: 16px;
+        padding-right: 16px;
+        position: relative;
+        text-align: left;
+        text-decoration: none;
+        transition: box-shadow .15s,transform .15s;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        white-space: nowrap;
+        will-change: box-shadow,transform;
+        font-size: 18px;
+    }
+
+    .button-30:focus {
+        box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+    }
+
+    .button-30:hover {
+        box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+        transform: translateY(-2px);
+    }
+
+    .button-30:active {
+        box-shadow: #D6D6E7 0 3px 7px inset;
+        transform: translateY(2px);
+    }
 </style>
 
