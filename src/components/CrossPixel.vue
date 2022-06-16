@@ -1,13 +1,27 @@
 <template>
-    <canvas id="1" width="200" height="200"></canvas>
-    <canvas id="2" width="200" height="200"></canvas>
+    <div>
+        <canvas id="1" width="200" height="200"></canvas>
+        <canvas id="2" width="200" height="200"></canvas>
+    </div>
+
+    <canvas 
+        id="3" width="200" height="200"
+    ></canvas>
+    <br>
+
+    <button 
+        v-on:click="create_cross_modal()" 
+        class="button-30 cross_action_btn" 
+        role="button"
+    >Create Cross Individual</button>
+
 </template>
 
 <script>
     export default {
 
         props: {
-           cross_individual:Object,
+           cross_individual:Array,
         },
        
         components: {
@@ -17,17 +31,24 @@
         data() {
             return{
                 individual:this.cross_individual,
+                show_cross_acrion_btn:false,
+                show_create_cross:false,
             }
         },
     
         methods: {
-            tet() {  
-                const canvas2 = document.getElementById('p1');
-                const ctx2 = canvas2.getContext('2d');
-                ctx2.fillStyle = 'red';
-                ctx2.fillRect(0, 0, 200, 200);
-                console.log('red')
+
+            show_cross_acrion_modal(){
+                this.show_cross_acrion_btn = true;
             },
+
+            create_cross_modal() {
+                this.show_create_cross = true;
+                this.show_cross_acrion_btn = false;
+                console.log(Object.values(this.individual)[0])
+                this.cross_pixel();
+            },
+          
 
             create(id,new_individual) {
                 const canvas = document.getElementById(id);
@@ -85,6 +106,24 @@
 
             },
 
+            cross(id1,id2) {
+                let size = 8;
+                console.log(size)
+                let thres = Math.floor(Math.random()*(size*size/2));
+                let new_soluton = [];
+                new_soluton.push((id1.slice(0,thres)));
+                new_soluton.push((id2.slice(thres)));
+                new_soluton = new_soluton.flat();
+                console.log(new_soluton,'new')
+                return new_soluton;
+            },
+
+            cross_pixel:function() {
+                let cross = this.cross(Object.values(this.individual)[0], Object.values(this.individual)[1]);
+                console.log(cross,'sss')
+                this.create(3,cross);
+            },
+
 
         }
     };
@@ -92,4 +131,9 @@
 </script>
 
 <style>
+
+    .cross_action_btn {
+        margin: 30px;
+        width: 300px;
+    }
 </style>

@@ -1,27 +1,38 @@
 <template>
     
-    <button v-if="show_c" v-on:click="create_pixel(),show()" 
-    class="button-30" role="button"
-    >Create</button>
+    <button v-if="show_c" 
+        v-on:click="create_pixel(),show()" 
+        class="button-30" role="button"
+        >Create
+    </button>
 
     <div v-if="show_b">
         <div>
-            <button v-on:click="create_pixel()" 
-            class="button-30" role="button"
-            >Create</button>
 
-            <button v-on:click="cross_modal()" 
-            class="button-30" role="button"
+            <button v-if="show_cross_btn" 
+                v-on:click="cross_modal()" 
+                class="button-30" 
+                role="button"
             >Cross</button>
 
-            <button v-on:click="create_pixel()" 
-            class="button-30" role="button"
+            <button v-if="show_create_btn" 
+                v-on:click="create_pixel()" 
+                class="button-30" 
+                role="button"
+            >Create</button>
+
+            <button v-if="show_evolution_btn" 
+                v-on:click="create_pixel()" 
+                class="button-30" 
+                role="button"
             >evolution</button>
         </div>
 
-        <cross-pixel v-if="cross_show" ref="hoge"
+        <cross-pixel v-if="cross_show" 
+            ref="hoge"
             :cross_individual="cross_individual"
         ></cross-pixel>
+
     </div>
 
     
@@ -32,14 +43,17 @@
     class="button-30" role="button"
     >Dowunload</button> -->
 
-    <br>
-    <canvas v-for="(key, i) in pixel_value"
+   
+    <div>
+        <canvas v-for="(key, i) in pixel_value"
         :key = "key"
         :id = "i"
         width="150" 
         height="150"
-        v-on:click='reverse(i)'
-    ></canvas>
+        v-on:click='select_cross_individual(i)'
+        ></canvas>
+    </div>
+    
     
 </template>
 <script>
@@ -58,7 +72,7 @@ import CrossPixel  from './CrossPixel.vue'
             return {
                 individual : {},
                 new_individual : {},
-                cross_individual:{},
+                cross_individual:[],
                 size:8,
                 cross_key:true,
                 pixel : [],
@@ -67,7 +81,10 @@ import CrossPixel  from './CrossPixel.vue'
                 show_c:true,
                 cross_show:false,
                 cross_cunt:1,
-                cross_cunt_c:1,
+                cross_cunt_c:0,
+                show_create_btn:true,
+                show_cross_btn:true,
+                show_evolution_btn:true,
             };
         },
         
@@ -86,18 +103,16 @@ import CrossPixel  from './CrossPixel.vue'
                 this.create(i);
             },
 
-            reverse:function(i) {
-                //this.cross_individual[i] = this.individual[i]
+            select_cross_individual:function(i) {
                 if (this.cross_cunt_c%2 == 0){
                     this.cross_individual[0] = this.individual[i]
-                    this.$refs.hoge.create(2,Object.values(this.cross_individual[0]));
+                    this.$refs.hoge.create(1,this.cross_individual[0]);
                 }else{
                     this.cross_individual[1] = this.individual[i]
-                    this.$refs.hoge.create(1,Object.values(this.cross_individual[1]));
-                } 
-                
+                    this.$refs.hoge.create(2,this.cross_individual[1]);
+                    this.$refs.hoge.show_cross_acrion_modal()
+                }  
                 this.cross_cunt_c += 1
-                
             },
 
             show: function() {
@@ -107,8 +122,12 @@ import CrossPixel  from './CrossPixel.vue'
             cross_modal:function() {
                 if(this.cross_cunt%2 == 1){
                     this.cross_show = true;
+                    this.show_create_btn = false;
+                    this.show_evolution_btn = false;
                 }else{
                     this.cross_show = false;
+                    this.show_create_btn = true;
+                    this.show_evolution_btn = true;
                 }
 
                 this.cross_cunt += 1;
@@ -125,9 +144,7 @@ import CrossPixel  from './CrossPixel.vue'
                 this.download("pixel");
             },
 
-            fuga:function() {
-                console.log('test')
-            },
+         
             
             //create_pixel
             create(id, new_individual = []) {
@@ -223,10 +240,10 @@ import CrossPixel  from './CrossPixel.vue'
         border-radius: 15px;
      }
 
-     button {
+    button {
         margin: 30px;
         width: 150px;
-     }
+    }
 
      /* CSS */
     .button-30 {
