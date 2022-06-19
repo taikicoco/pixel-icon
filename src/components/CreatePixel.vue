@@ -92,8 +92,25 @@ import CrossPixel  from './CrossPixel.vue'
             
         },
 
+        mounted() {
+            window.onload = ()=>{
+                //alert('ページが読み込まれました！')
+                this.create_pixel();
+                // setInterval(() => { 
+                //     console.log('t') 
+                //     this.create_pixel();
+                // }, 1000)
+                
+            }
+        },
+
         methods: {
 
+            created: function() {
+                setInterval(() => { console.log('t') }, 100)
+            },
+
+           
             create_pixel:function() {
                 for(let i = 0; i < this.pixel_value.length; i++) {
                     this.push(i);
@@ -166,7 +183,7 @@ import CrossPixel  from './CrossPixel.vue'
                     }
                 }
                 
-                console.log(individual,'T')
+              
                 this.individual[id] = individual;
 
                 //canvasをグリットに区切るための配列
@@ -241,7 +258,7 @@ import CrossPixel  from './CrossPixel.vue'
      }
 
     button {
-        margin: 30px;
+        margin: 20px;
         width: 150px;
     }
 
