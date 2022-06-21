@@ -34,11 +34,6 @@
     
         methods: {
 
-            create_cross_individual() {
-                this.cross_pixel();
-            },
-          
-
             create(id,new_individual) {
                 const canvas = document.getElementById(id);
                 const ctx = canvas.getContext('2d');
@@ -93,6 +88,11 @@
 
             },
 
+            create_cross_individual:function() {
+                let cross = this.cross(Object.values(this.individual)[0], Object.values(this.individual)[1]);
+                this.create(3,cross);
+            },
+
             cross(id1,id2) {
                 let size = 8;
                 let thres = Math.floor(Math.random()*(size*size/2));
@@ -102,13 +102,6 @@
                 new_soluton = new_soluton.flat();
                 return new_soluton;
             },
-
-            cross_pixel:function() {
-                let cross = this.cross(Object.values(this.individual)[0], Object.values(this.individual)[1]);
-                this.create(3,cross);
-            },
-
-
         }
     };
 
