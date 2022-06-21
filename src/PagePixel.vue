@@ -28,8 +28,8 @@
       role="button"
     >Mutation</button>
 
-    <button v-if="show_evolution_btn" 
-      v-on:click="create_pixel()" 
+    <button v-if="show_new_btn" 
+      v-on:click="new_modal()" 
       class="button-30" 
       role="button"
     >evolution</button>
@@ -45,6 +45,11 @@
     ref="mutation"
     :mutation_individual="mutation_individual"
     ></mutation-pixel>
+
+    <new-pixel v-if="new_show"
+    ref="new"
+    :new_individual = "new_individual"
+    ></new-pixel>
   </div>
   
 
@@ -63,17 +68,16 @@
 
 <script>
 
-//import CreatePixel from './components/CreatePixel.vue'
 import CrossPixel  from './components/CrossPixel.vue'
 import MutationPixel from './components/MutationPixel.vue'
-
+import NewPixel from './components/NewPixel.vue'
 
   export default {
     name: 'PagePixel',
     components: {
-      //CreatePixel,
       CrossPixel,
       MutationPixel,
+      NewPixel,
     },
 
     data() {
@@ -86,12 +90,15 @@ import MutationPixel from './components/MutationPixel.vue'
           show_create_btn:true,
           show_cross_btn:true,
           show_mutation_btn:true,
-          show_evolution_btn:true,
+          show_new_btn:true,
           cross_btn_count:0,
+          mutation_btn_count:0,
+          new_btn_count:0,
 
           //各componentの表示/非表示
           cross_show:false,
           mutation_show:false,
+          new_show:false,
 
           //現状の表示タイプ
           type:"",
@@ -107,7 +114,12 @@ import MutationPixel from './components/MutationPixel.vue'
 
           //mutation_action
           mutation_individual: [],
-          select_mutation_count:0,
+
+          //new_action
+          new_individual:[],
+          select_new_count:0,
+
+
 
           
       }
@@ -134,13 +146,13 @@ import MutationPixel from './components/MutationPixel.vue'
         if(this.cross_btn_count%2 == 0){
           this.cross_show = true;
           this.show_create_btn = false;
-          this.show_evolution_btn = false;
+          this.show_new_btn = false;
           this.show_mutation_btn = false;
           this.type = 'cross';
         }else{
           this.cross_show = false;
           this.show_create_btn = true;
-          this.show_evolution_btn = true;
+          this.show_new_btn = true;
           this.show_mutation_btn = true;
           this.type = '';
         }
@@ -148,21 +160,35 @@ import MutationPixel from './components/MutationPixel.vue'
       },
 
       mutation_modal:function() {
-        if(this.select_mutation_count %2 == 0){
+        if(this.mutation_btn_count %2 == 0){
           this.mutation_show = true;
           this.show_create_btn = false;
-          this.show_evolution_btn = false;
           this.show_cross_btn = false;
-          this.show_mutation_btn = true;
+          this.show_new_btn = false;
           this.type = 'mutation';
         }else{
           this.mutation_show = false;
           this.show_cross_btn = true;
           this.show_create_btn = true;
-          this.show_evolution_btn = true;
+          this.show_new_btn = true;
+        }
+        this.mutation_btn_count += 1;
+      },
+
+      new_modal:function() {
+        if(this.new_btn_count %2 == 0){
+          this.new_show = true;
+          this.show_create_btn = false;
+          this.show_cross_btn = false;
+          this.show_mutation_btn = false;
+          this.type = 'new';
+        }else{
+          this.new_show = false;
+          this.show_cross_btn = true;
+          this.show_create_btn = true;
           this.show_mutation_btn = true;
         }
-        this.select_mutation_count += 1;
+        this.new_btn_count += 1;
       },
    
       create_pixel:function() {
@@ -235,7 +261,6 @@ import MutationPixel from './components/MutationPixel.vue'
       },
 
       select_individual:function(index) {
-        console.log(this.type)
         if (this.type == "cross") {
           if (this.select_cross_count %2 == 0) {
             this.cross_individual[0] = this.individual[index];
@@ -244,17 +269,24 @@ import MutationPixel from './components/MutationPixel.vue'
             this.cross_individual[1] = this.individual[index];
             this.$refs.cross.create(2,this.cross_individual[1]);
           }
-          this.select_cross_count += 1
+          this.select_cross_count += 1;
         }
-
         else if (this.type == "mutation") {
           this.mutation_individual[0] = this.individual[index];
           this.$refs.mutation.create(11,this.mutation_individual[0])
         }
-
-
+        else if (this.type == "new") {
+          console.log(1)
+          if (this.select_new_count %2 == 0) {
+            this.new_individual[0] = this.individual[index];
+            this.$refs.new.create(111,this.new_individual[0])
+          }else{
+            this.new_individual[1] = this.individual[index];
+            this.$refs.new.create(222,this.new_individual[1])
+          }
+          this.select_new_count += 1;
+        }
       },
-
     }
   }
 </script>
