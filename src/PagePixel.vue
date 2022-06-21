@@ -49,6 +49,7 @@
     <new-pixel v-if="new_show"
     ref="new"
     :new_individual = "new_individual"
+    @new = "new_icon"
     ></new-pixel>
   </div>
   
@@ -190,6 +191,12 @@ import NewPixel from './components/NewPixel.vue'
         }
         this.new_btn_count += 1;
       },
+
+      new_icon(icon){
+        for(let i = 0; i < this.pixel_value.length; i++) {
+          this.create(i,icon[i]);
+        }
+      },
    
       create_pixel:function() {
         for(let i = 0; i < this.pixel_value.length; i++) {
@@ -197,7 +204,7 @@ import NewPixel from './components/NewPixel.vue'
         }
       },
       //create_pixel
-      create(id) {
+      create(id,new_individual = []) {
         const canvas = document.getElementById(id);
         const ctx = canvas.getContext('2d');
         const width = 150;
@@ -206,7 +213,8 @@ import NewPixel from './components/NewPixel.vue'
         let bit_size = width/size;
         let n = 0;
         let position = [];
-        let individual = [];
+        //let individual = [];
+        let individual = new_individual;
   
 
         if (individual.length == 0) {
@@ -276,7 +284,6 @@ import NewPixel from './components/NewPixel.vue'
           this.$refs.mutation.create(11,this.mutation_individual[0])
         }
         else if (this.type == "new") {
-          console.log(1)
           if (this.select_new_count %2 == 0) {
             this.new_individual[0] = this.individual[index];
             this.$refs.new.create(111,this.new_individual[0])

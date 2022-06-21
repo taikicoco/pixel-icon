@@ -5,7 +5,7 @@
     </div>
 
     <button 
-        v-on:click="create_new_individual()" 
+        v-on:click="create_new_individual(this.individual)" 
         class="button-30 cross_action_btn" 
         role="button"
     >Create New Individual</button>
@@ -26,17 +26,23 @@
         data() {
             return{
                 individual:this.new_individual,
-                size:8,
+                size:12,
             }
         },
     
         methods: {
-            // create_new_individual() {
-            //     let new_generation = [];
-            //     for (let i = 0; i < this.size; i++) {
+            create_new_individual(parents,mut_n = 3) {
+                let new_generation = [];
+                for (let i = 0; i < this.size; i++) {
+                    let child = this.cross(parents[1], parents[0])
+                    new_generation.push(child)
+                }
+                for (let j = 0; j < mut_n; j++) {
+                    new_generation[j] = this.create_mutation_individual(new_generation[j])
+                }
+                this.$emit('new',new_generation)
+            },
 
-            //     }
-            // },
 
           
           
@@ -93,6 +99,24 @@
                     }
                 }
             },
+
+            cross(id1,id2) {
+                let size = 8;
+                let thres = Math.floor(Math.random()*(size*size/2));
+                let new_soluton = [];
+                new_soluton.push((id1.slice(0,thres)));
+                new_soluton.push((id2.slice(thres)));
+                new_soluton = new_soluton.flat();
+                return new_soluton;
+            },
+
+            create_mutation_individual(individual) {
+                let size = this.size;
+                let mut = Math.floor(Math.random()*(size*size/2));
+                let new_individual = individual
+                new_individual[mut] = (new_individual[mut] + 1) % 2
+                return new_individual;
+            },     
         }
     };
 
