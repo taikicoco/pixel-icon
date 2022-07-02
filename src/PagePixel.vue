@@ -1,5 +1,5 @@
 <template>
-  <h2>AI Pixel icon</h2>
+  <h1>AI Pixel icon</h1>
 
   <div>
     <button v-if="show_start_btn"
@@ -32,7 +32,13 @@
       v-on:click="new_modal()" 
       class="button-30" 
       role="button"
-    >evolution</button>
+    >Evolution</button>
+
+    <button v-if="show_download_btn" 
+      v-on:click="download()" 
+      class="button-30" 
+      role="button"
+    >Downloal</button>
   </div>
 
   <div>
@@ -68,7 +74,6 @@
 </template>
 
 <script>
-
 import CrossPixel  from './components/CrossPixel.vue'
 import MutationPixel from './components/MutationPixel.vue'
 import NewPixel from './components/NewPixel.vue'
@@ -92,9 +97,11 @@ import NewPixel from './components/NewPixel.vue'
           show_cross_btn:true,
           show_mutation_btn:true,
           show_new_btn:true,
+          show_download_btn:true,
           cross_btn_count:0,
           mutation_btn_count:0,
           new_btn_count:0,
+          downlaod_btn_count:0,
 
           //各componentの表示/非表示
           cross_show:false,
@@ -149,12 +156,14 @@ import NewPixel from './components/NewPixel.vue'
           this.show_create_btn = false;
           this.show_new_btn = false;
           this.show_mutation_btn = false;
+          this.show_download_btn = false;
           this.type = 'cross';
         }else{
           this.cross_show = false;
           this.show_create_btn = true;
           this.show_new_btn = true;
           this.show_mutation_btn = true;
+          this.show_download_btn = true;
           this.type = '';
         }
         this.cross_btn_count += 1;
@@ -166,12 +175,14 @@ import NewPixel from './components/NewPixel.vue'
           this.show_create_btn = false;
           this.show_cross_btn = false;
           this.show_new_btn = false;
+          this.show_download_btn = false;
           this.type = 'mutation';
         }else{
           this.mutation_show = false;
           this.show_cross_btn = true;
           this.show_create_btn = true;
           this.show_new_btn = true;
+          this.show_download_btn = true;
         }
         this.mutation_btn_count += 1;
       },
@@ -182,12 +193,14 @@ import NewPixel from './components/NewPixel.vue'
           this.show_create_btn = false;
           this.show_cross_btn = false;
           this.show_mutation_btn = false;
+          this.show_download_btn = false;
           this.type = 'new';
         }else{
           this.new_show = false;
           this.show_cross_btn = true;
           this.show_create_btn = true;
           this.show_mutation_btn = true;
+          this.show_download_btn = true;
         }
         this.new_btn_count += 1;
       },
@@ -293,6 +306,14 @@ import NewPixel from './components/NewPixel.vue'
           }
           this.select_new_count += 1;
         }
+      },
+
+      download:function() {
+        let canvas = document.getElementById(1);
+        let link = document.createElement("a");
+        link.href = canvas.toDataURL("image/png");
+        link.download = "AI_Pixel_icon.png";
+        link.click();
       },
     }
   }
