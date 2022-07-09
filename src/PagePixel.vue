@@ -35,7 +35,7 @@
     >Evolution</button>
 
     <button v-if="show_download_btn" 
-      v-on:click="download()" 
+      v-on:click="download_modal()" 
       class="button-30" 
       role="button"
     >Downloal</button>
@@ -102,6 +102,7 @@ import NewPixel from './components/NewPixel.vue'
           mutation_btn_count:0,
           new_btn_count:0,
           downlaod_btn_count:0,
+          
 
           //各componentの表示/非表示
           cross_show:false,
@@ -203,6 +204,22 @@ import NewPixel from './components/NewPixel.vue'
           this.show_download_btn = true;
         }
         this.new_btn_count += 1;
+      },
+      download_modal:function() {
+        if(this.downlaod_btn_count %2 == 0){
+          this.new_show = false;
+          this.show_create_btn = false;
+          this.show_cross_btn = false;
+          this.show_mutation_btn = false;
+          this.show_new_btn = false;
+          this.type = 'download';
+        }else{
+          this.show_new_btn = true;
+          this.show_cross_btn = true;
+          this.show_create_btn = true;
+          this.show_mutation_btn = true;
+        }
+        this.downlaod_btn_count += 1;
       },
 
       new_icon(icon){
@@ -306,10 +323,13 @@ import NewPixel from './components/NewPixel.vue'
           }
           this.select_new_count += 1;
         }
+        else if(this.type == "download") {
+          this.download(index);
+        }
       },
 
-      download:function() {
-        let canvas = document.getElementById(1);
+      download:function(index) {
+        let canvas = document.getElementById(index);
         let link = document.createElement("a");
         link.href = canvas.toDataURL("image/png");
         link.download = "AI_Pixel_icon.png";
