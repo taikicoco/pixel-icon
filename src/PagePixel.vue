@@ -14,25 +14,25 @@
       v-on:click="cross_modal()" 
       class="button-30" 
       role="button"
-    >Cross</button>
-
-    <button v-if="show_create_btn" 
-      v-on:click="create_pixel()" 
-      class="button-30" 
-      role="button"
-    >Create</button>
+    >合体</button>
 
     <button v-if="show_mutation_btn" 
       v-on:click="mutation_modal()" 
       class="button-30" 
       role="button"
-    >Mutation</button>
+    >進化</button>
 
     <button v-if="show_new_btn" 
       v-on:click="new_modal()" 
       class="button-30" 
       role="button"
-    >Evolution</button>
+    >合体進化</button>
+
+    <button v-if="show_create_btn" 
+      v-on:click="create_pixel()" 
+      class="button-30" 
+      role="button"
+    >作成</button>
 
     <button v-if="show_download_btn" 
       v-on:click="download_modal()" 
