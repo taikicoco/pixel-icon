@@ -8,7 +8,7 @@
         v-on:click="create_mutation_individual()" 
         class="button-30 cross_action_btn" 
         role="button"
-    >Create Mutation Individual</button>
+    >進化させるアイコンを選ぶ</button>
 
 </template>
 
