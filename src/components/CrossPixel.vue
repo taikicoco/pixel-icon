@@ -9,7 +9,7 @@
         v-on:click="create_cross_individual()" 
         class="button-30 cross_action_btn" 
         role="button"
-    >Create Cross Individual</button>
+    >合体させるアイコンを2つ選ぶ</button>
 
 </template>
 

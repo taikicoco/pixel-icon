@@ -8,7 +8,7 @@
         v-on:click="create_new_individual(this.individual)" 
         class="button-30 cross_action_btn" 
         role="button"
-    >Create New Individual</button>
+    >合体進化させるアイコンを2つ選ぶ</button>
 
 </template>
 

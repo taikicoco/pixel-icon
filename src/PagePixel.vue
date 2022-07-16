@@ -14,31 +14,31 @@
       v-on:click="cross_modal()" 
       class="button-30" 
       role="button"
-    >Cross</button>
-
-    <button v-if="show_create_btn" 
-      v-on:click="create_pixel()" 
-      class="button-30" 
-      role="button"
-    >Create</button>
+    >{{cross_btn_word}}</button>
 
     <button v-if="show_mutation_btn" 
       v-on:click="mutation_modal()" 
       class="button-30" 
       role="button"
-    >Mutation</button>
+    >{{mutation_btn_word}}</button>
 
     <button v-if="show_new_btn" 
       v-on:click="new_modal()" 
       class="button-30" 
       role="button"
-    >Evolution</button>
+    >{{new_btn_word}}</button>
+
+    <button v-if="show_create_btn" 
+      v-on:click="create_pixel()" 
+      class="button-30" 
+      role="button"
+    >アイコン作成！</button>
 
     <button v-if="show_download_btn" 
       v-on:click="download_modal()" 
       class="button-30" 
       role="button"
-    >Downloal</button>
+    >ダウンロード</button>
   </div>
 
   <div>
@@ -128,6 +128,13 @@ import NewPixel from './components/NewPixel.vue'
           new_individual:[],
           select_new_count:0,
 
+          //ボタンの表示文字
+          cross_btn_word:"合体!",
+          mutation_btn_word:"進化！",
+          new_btn_word:"合体進化！",
+
+          
+
 
 
           
@@ -159,6 +166,7 @@ import NewPixel from './components/NewPixel.vue'
           this.show_mutation_btn = false;
           this.show_download_btn = false;
           this.type = 'cross';
+          this.cross_btn_word = "戻る";
         }else{
           this.cross_show = false;
           this.show_create_btn = true;
@@ -166,6 +174,7 @@ import NewPixel from './components/NewPixel.vue'
           this.show_mutation_btn = true;
           this.show_download_btn = true;
           this.type = '';
+          this.cross_btn_word = "合体！";
         }
         this.cross_btn_count += 1;
       },
@@ -178,12 +187,14 @@ import NewPixel from './components/NewPixel.vue'
           this.show_new_btn = false;
           this.show_download_btn = false;
           this.type = 'mutation';
+          this.mutation_btn_word = "戻る";
         }else{
           this.mutation_show = false;
           this.show_cross_btn = true;
           this.show_create_btn = true;
           this.show_new_btn = true;
           this.show_download_btn = true;
+          this.mutation_btn_word = "進化！";
         }
         this.mutation_btn_count += 1;
       },
@@ -196,12 +207,14 @@ import NewPixel from './components/NewPixel.vue'
           this.show_mutation_btn = false;
           this.show_download_btn = false;
           this.type = 'new';
+          this.new_btn_word = "戻る";
         }else{
           this.new_show = false;
           this.show_cross_btn = true;
           this.show_create_btn = true;
           this.show_mutation_btn = true;
           this.show_download_btn = true;
+          this.new_btn_word = "合体進化！";
         }
         this.new_btn_count += 1;
       },
