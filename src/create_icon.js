@@ -1,17 +1,27 @@
-export const createIcon = function(id, canvas_length) {
+export const createIcon = function(id, setting_icon, icon_data = []) {
     const canvas = document.getElementById(id);
     const ctx = canvas.getContext('2d');
-    const width = canvas_length;
-    const size = 8
-    let bit_size = width/size;
+
+
+    const width = setting_icon.canvas_length;
+    const size = setting_icon.pixel_number;
+    const bit_size = width/size;
+
+    const color1 = setting_icon.color1;
+    const color2 = setting_icon.color2;
+
     let n = 0;
     let position = [];
-    let individual = [];
+    //let icon_data = [];
+    
 
-    //個体値の配列をランダムで生成
-    for (let i = 0; i < size*size/2; i++) {
-    individual.push(Math.floor(Math.random()*2));
-    }    
+    if(icon_data.length == 0) {
+        //個体値の配列をランダムで生成
+        for (let i = 0; i < size*size/2; i++) {
+            icon_data.push(Math.floor(Math.random()*2));
+        } 
+    }
+
 
     //canvasをグリットに区切るための配列
     for (let i = 0; i < size; i++) {
@@ -20,38 +30,39 @@ export const createIcon = function(id, canvas_length) {
     }
 
     //ベースとなる色を塗る
-    ctx.fillStyle = 'black';
+    ctx.fillStyle = color1;
     ctx.fillRect(0, 0, width, width);
 
     //左右対称にするための配列
-    let individual_s = [];
-    let individual_r = [];
+    let icon_s = [];
+    let icon_r = [];
     //区切ったグリットの色を削除
     let i = 0;
     for (let j = 0; j < size; j++) {
       let v = [];
       for (let k = 0; k < size/2; k++) {
-        v[k] = individual[i];
-        if (individual[i] == 0) {
-          ctx.fillStyle = 'white';
+        v[k] = icon_data[i];
+        if (icon_data[i] == 0) {
+          ctx.fillStyle = color2;
           ctx.clearRect(position[k], position[j], bit_size, bit_size);
         }
         i += 1;
       }
-      individual_s.push(v);
-      individual_r.push(v.reverse()); 
+      icon_s.push(v);
+      icon_r.push(v.reverse()); 
     }
 
     //右側の絵を左右対称に作成
-    individual_r = individual_r.flat(2)
+    let get_icon = icon_r.flat(2)
     i = 0;
     for (let j = 0; j < size; j++) {
       for (let k = size/2; k < size; k++) {
-        if (individual_r[i] == 0) {
+        if (get_icon[i] == 0) {
           ctx.clearRect(position[k], position[j], bit_size, bit_size);
         }
         i += 1;
       }
     }
+    return get_icon;
 }
 

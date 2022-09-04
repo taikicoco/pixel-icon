@@ -29,69 +29,78 @@
     </button>
   </div>
 
+  <!-- show_action -->
+  <cross-Icon 
+    ref="cross"
+    :cross_icon="cross_icon"
+    :setting_icon="setting_icon"
+  ></cross-Icon>
+
+
 
   <!-- show_cancas -->
   <div class="flex flex-wrap justify-around m-8">
     
     <canvas 
       id = 1
-      :width = 'canvas_length'
-      :height= 'canvas_length'
+      :width = 'setting_icon.canvas_length'
+      :height= 'setting_icon.canvas_length'
+      v-on:click='select_icon(1)'
     ></canvas>
     <canvas 
       id = 2
-      :width = 'canvas_length'
-      :height= 'canvas_length'
+      :width = 'setting_icon.canvas_length'
+      :height= 'setting_icon.canvas_length'
     ></canvas>
     <canvas 
       id = 3
-      :width = 'canvas_length'
-      :height= 'canvas_length'
+      :width = 'setting_icon.canvas_length'
+      :height= 'setting_icon.canvas_length'
     ></canvas>
     <canvas 
       id = 4
-      :width = 'canvas_length'
-      :height= 'canvas_length'
+      :width = 'setting_icon.canvas_length'
+      :height= 'setting_icon.canvas_length'
     ></canvas>
     <canvas 
       id = 5
-      :width = 'canvas_length'
-      :height= 'canvas_length'
+      :width = 'setting_icon.canvas_length'
+      :height= 'setting_icon.canvas_length'
     ></canvas>
     <canvas 
       id = 6
-      :width = 'canvas_length'
-      :height= 'canvas_length'
+      :width = 'setting_icon.canvas_length'
+      :height= 'setting_icon.canvas_length'
     ></canvas>
     <canvas 
       id = 7
-      :width = 'canvas_length'
-      :height= 'canvas_length'
+      :width = 'setting_icon.canvas_length'
+      :height= 'setting_icon.canvas_length'
     ></canvas>
     <canvas 
       id = 8
-      :width = 'canvas_length'
-      :height= 'canvas_length'
+      :width = 'setting_icon.canvas_length'
+      :height= 'setting_icon.canvas_length'
     ></canvas>
     <canvas 
       id = 9
-      :width = 'canvas_length'
-      :height= 'canvas_length'
+      :width = 'setting_icon.canvas_length'
+      :height= 'setting_icon.canvas_length'
     ></canvas>
     <canvas 
       id = 10
-      :width = 'canvas_length'
-      :height= 'canvas_length'
+      :width = 'setting_icon.canvas_length'
+      :height= 'setting_icon.canvas_length'
     ></canvas>
     <canvas 
       id = 11
-      :width = 'canvas_length'
-      :height= 'canvas_length'
+      :width = 'setting_icon.canvas_length'
+      :height= 'setting_icon.canvas_length'
     ></canvas>
     <canvas 
       id = 12
-      :width = 'canvas_length'
-      :height= 'canvas_length'
+      :width = 'setting_icon.canvas_length'
+      :height= 'setting_icon.canvas_length'
     ></canvas>
 
   </div>
@@ -101,31 +110,47 @@
 </template>
 
 <script>
+import CrossIcon  from './components/CrossIcon.vue'
+
 import {createIcon} from './create_icon'
 
 export default {
   name: 'App',
   components: {
-    
+    CrossIcon,
   },
 
   data() {
     return {
-      canvas_length:150,
+      icons_array: [],
 
-      btn:{
+      is_btn:{
+        cross:false,
+        evolution:false,
+        cross_evolutioni:false,
+        download:false,
+        create:false,
+      },
 
+      is_action:{
+
+      },
+
+      setting_icon:{
+        canvas_length:100,
+        pixel_number:8,
+        color1:'black',
+        color2:'white',
       },
     }
   },
 
   mounted() {
+
     window.onload = ()=>{
       this.show_icon();
       setInterval(() => { 
-        this.get_window_width();
-        console.log(this.canvas_length)
-        
+        //console.log(this.canvas_length)
       }, 1000)
     
     }
@@ -133,26 +158,21 @@ export default {
 
   methods: {
     show_icon() {
-      for(let i=0; i<4; i++) {
-        createIcon(i, this.canvas_length);
+      for(let i=1; i<=12; i++) {
+        let icon = createIcon(i, this.setting_icon);
+        this.icons_array[i] = icon;
       }   
     },
 
-    //window_sizeを取得
-    //window_sizeに応じてcanvas_sizeを変更
-    get_window_width() {
-      let page_width = window.innerWidth;
-      console.log(page_width);
-      if(page_width >= 1024) {
-        this.canvas_length = 150;
-      }else if(page_width >= 768) {
-        this.canvas_length = 120;
-      }else if(page_width >= 640){
-        this.canvas_length = 100;
-      }else {
-        this.canvas_length = 100;
-      }
-    }, 
+    select_icon:function(id) {
+      //this.cross_icon[0] = this.icon[id];
+      console.log(id)
+      let a = [1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1];
+      this.$refs.cross.create_cross_icon(101,a);
+    },
+
+
+    
 
   },
 }
