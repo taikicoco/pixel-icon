@@ -10,31 +10,39 @@
 
   <!-- action_btn -->
   <div class="flex flex-wrap justify-center m-5">
-    <button class="m-1 p-3 w-28 rounded-lg text-xs">
-      シンカ
-    </button>
-    <button class="m-1 p-3 w-28 rounded-lg text-xs">
-        ガッタイ
-    </button>
+    <button class="m-1 p-3 w-28 rounded-lg text-xs"
+      v-on:click='select_action("evolution")'
+    >シンカ</button>
+    <button class="m-1 p-3 w-28 rounded-lg text-xs"
+      v-on:click='select_action("cross")'
+    >ガッタイ</button>
     <button class="m-1 p-3 w-28 rounded-lg text-xs">
         ガッタイシンカ
     </button>
   </div>
   <div class="flex flex-wrap justify-center m-5">
-    <button class="m-1 p-3 w-28 rounded-lg text-xs">
-        サクセイ
-    </button>
+    <button class="m-1 p-3 w-28 rounded-lg text-xs"
+    v-on:click='show_icon("cross")'
+    >サクセイ</button>
     <button class="  m-1 p-3 w-28 rounded-lg text-xs">
         ダウンロード
     </button>
   </div>
 
   <!-- show_action -->
-  <cross-Icon 
+  <cross-Icon v-if="action.cross.show"
     ref="cross"
     :cross_icon_data="cross_icon_data"
     :setting_icon="setting_icon"
+    @close = "close"
   ></cross-Icon>
+
+  <EvolutionIcon v-if="action.evolution.show"
+    ref="evolution"
+    :evolution_icon_data="evolution_icon_data"
+    :setting_icon="setting_icon"
+    @close = "close"
+  ></EvolutionIcon>
 
 
 
@@ -121,6 +129,7 @@
 
 <script>
 import CrossIcon  from './components/CrossIcon.vue'
+import EvolutionIcon from './components/EvolutionIcon.vue'
 
 import {createIcon} from './create_icon'
 
@@ -128,27 +137,34 @@ export default {
   name: 'App',
   components: {
     CrossIcon,
-  },
+    EvolutionIcon,
+},
 
   data() {
     return {
       icons_data: [],
       cross_icon_data:[],
+      evolution_icon_data:[],
 
       is_btn:{
         cross:false,
         evolution:false,
-        cross_evolutioni:false,
+        cross_evolution:false,
         download:false,
         create:false,
       },
 
-      is_action:{
+      action:{
         cross:{
           select_count:0,
+          show:false,
+        },
+        evolution:{
+          show:false,
         },
       },
 
+      //iconの設定情報
       setting_icon:{
         canvas_length:100,
         pixel_number:8,
@@ -179,11 +195,52 @@ export default {
     },
 
     select_icon:function(id) {
-      let cross_count = this.is_action.cross.select_count %2;
+      const action = this.action.is_action;
+      if(action == "evolution") {
+        this.select_icon_evolution(id);
+      }
+
+      if(action == "cross") {
+        this.select_icon_cross(id);
+      }
       
+    },
+
+    select_action:function(action) {
+      this.action.is_action = action;
+      const is_action = action;
+      if(is_action == "cross"){
+        this.action.cross.show = true;
+      }
+      if(action == "evolution"){
+        this.action.evolution.show = true;
+      }
+      
+    },
+
+    show_action:function() {
+
+    },
+
+    select_icon_cross(id) {
+      let cross_count = this.action.cross.select_count %2;
       this.cross_icon_data[cross_count] = this.icons_data[id];
       this.$refs.cross.select_cross_icon(cross_count,this.icons_data[id]);
-      this.is_action.cross.select_count += 1;
+      this.action.cross.select_count += 1;
+    },
+
+    select_icon_evolution(id) {
+      this.evolution_icon_data[0] = this.icons_data[id];
+      this.$refs.evolution.select_evolution_icon(this.icons_data[id]);
+    },
+
+    close(action){
+      if(action == "cross"){
+        this.action.cross.show = false;
+      }
+      if(action == "evolution"){
+        this.action.evolution.show = false;
+      }
     },
 
 
@@ -198,6 +255,8 @@ export default {
     box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
     border-radius: 15px;
     margin: 20px;
+    cursor: pointer;
+    cursor: hand;
   }
   button {
     box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
