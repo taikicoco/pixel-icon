@@ -32,7 +32,7 @@
   <!-- show_action -->
   <cross-Icon 
     ref="cross"
-    :cross_icon="cross_icon"
+    :cross_icon_data="cross_icon_data"
     :setting_icon="setting_icon"
   ></cross-Icon>
 
@@ -51,62 +51,72 @@
       id = 2
       :width = 'setting_icon.canvas_length'
       :height= 'setting_icon.canvas_length'
+      v-on:click='select_icon(2)'
     ></canvas>
     <canvas 
       id = 3
       :width = 'setting_icon.canvas_length'
       :height= 'setting_icon.canvas_length'
+      v-on:click='select_icon(3)'
     ></canvas>
     <canvas 
       id = 4
       :width = 'setting_icon.canvas_length'
       :height= 'setting_icon.canvas_length'
+      v-on:click='select_icon(4)'
     ></canvas>
     <canvas 
       id = 5
       :width = 'setting_icon.canvas_length'
       :height= 'setting_icon.canvas_length'
+      v-on:click='select_icon(5)'
     ></canvas>
     <canvas 
       id = 6
       :width = 'setting_icon.canvas_length'
       :height= 'setting_icon.canvas_length'
+      v-on:click='select_icon(6)'
     ></canvas>
     <canvas 
       id = 7
       :width = 'setting_icon.canvas_length'
       :height= 'setting_icon.canvas_length'
+      v-on:click='select_icon(7)'
     ></canvas>
     <canvas 
       id = 8
       :width = 'setting_icon.canvas_length'
       :height= 'setting_icon.canvas_length'
+      v-on:click='select_icon(8)'
     ></canvas>
     <canvas 
       id = 9
       :width = 'setting_icon.canvas_length'
       :height= 'setting_icon.canvas_length'
+      v-on:click='select_icon(9)'
     ></canvas>
     <canvas 
       id = 10
       :width = 'setting_icon.canvas_length'
       :height= 'setting_icon.canvas_length'
+      v-on:click='select_icon(10)'
     ></canvas>
     <canvas 
       id = 11
       :width = 'setting_icon.canvas_length'
       :height= 'setting_icon.canvas_length'
+      v-on:click='select_icon(11)'
     ></canvas>
     <canvas 
       id = 12
       :width = 'setting_icon.canvas_length'
       :height= 'setting_icon.canvas_length'
+      v-on:click='select_icon(12)'
     ></canvas>
 
   </div>
  
 
-  
 </template>
 
 <script>
@@ -122,7 +132,8 @@ export default {
 
   data() {
     return {
-      icons_array: [],
+      icons_data: [],
+      cross_icon_data:[],
 
       is_btn:{
         cross:false,
@@ -133,7 +144,9 @@ export default {
       },
 
       is_action:{
-
+        cross:{
+          select_count:0,
+        },
       },
 
       setting_icon:{
@@ -158,17 +171,19 @@ export default {
 
   methods: {
     show_icon() {
-      for(let i=1; i<=12; i++) {
+      const number_of_canvas = 12;
+      for(let i=1; i<=number_of_canvas; i++) {
         let icon = createIcon(i, this.setting_icon);
-        this.icons_array[i] = icon;
+        this.icons_data[i] = icon;
       }   
     },
 
     select_icon:function(id) {
-      //this.cross_icon[0] = this.icon[id];
-      console.log(id)
-      let a = [1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1];
-      this.$refs.cross.create_cross_icon(101,a);
+      let cross_count = this.is_action.cross.select_count %2;
+      
+      this.cross_icon_data[cross_count] = this.icons_data[id];
+      this.$refs.cross.select_cross_icon(cross_count,this.icons_data[id]);
+      this.is_action.cross.select_count += 1;
     },
 
 

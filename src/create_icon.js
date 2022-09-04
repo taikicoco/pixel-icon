@@ -12,7 +12,7 @@ export const createIcon = function(id, setting_icon, icon_data = []) {
 
     let n = 0;
     let position = [];
-    //let icon_data = [];
+    let return_icon = [];
     
 
     if(icon_data.length == 0) {
@@ -21,6 +21,7 @@ export const createIcon = function(id, setting_icon, icon_data = []) {
             icon_data.push(Math.floor(Math.random()*2));
         } 
     }
+    return_icon = icon_data;
 
 
     //canvasをグリットに区切るための配列
@@ -63,6 +64,6 @@ export const createIcon = function(id, setting_icon, icon_data = []) {
         i += 1;
       }
     }
-    return get_icon;
+    return return_icon;
 }
 
