@@ -1,24 +1,13 @@
-# pixel-icon2
+# Pixel icon
 
-## Project setup
-```
-npm install
-```
+## Available Scripts
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+In the project directory, you can run:
 
-### Compiles and minifies for production
-```
-npm run build
-```
+### `npm run dev`
 
-### Lints and fixes files
-```
-npm run lint
-```
+Runs the app in the development mode.\
+Open [http://localhost:8080](http://localhost:8080) to view it in the browser.
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+
+<img width="1391" alt="" src="https://user-images.githubusercontent.com/80304118/177730240-908013a5-ac87-43af-acdc-ca7f61b83b3f.png">
