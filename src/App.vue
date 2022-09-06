@@ -24,9 +24,9 @@
     <button class="m-1 p-3 w-28 rounded-lg text-xs"
     v-on:click='show_icon("cross")'
     >ランダム</button>
-    <button class="  m-1 p-3 w-28 rounded-lg text-xs">
-        ダウンロード
-    </button>
+    <button class="  m-1 p-3 w-28 rounded-lg text-xs"
+      v-on:click="is_download()"
+    >ダウンロード</button>
   </div>
 
   <!-- show_action -->
@@ -49,6 +49,7 @@
     :cross_evolution_data="cross_evolution_data"
     :setting_icon="setting_icon"
     @close = "close"
+    @cross_evolution = "show_cross_evolution"
   ></cross-evolution>
 
 
@@ -140,6 +141,7 @@ import EvolutionIcon from './components/EvolutionIcon.vue'
 import CrossEvolution from './components/CrossEvolution.vue'
 
 import {createIcon} from './create_icon'
+import {DownloadIcon} from './create_icon'
 
 
 export default {
@@ -181,10 +183,13 @@ export default {
 
       //iconの設定情報
       setting_icon:{
+        number_of_canvas:12,
         canvas_length:100,
         pixel_number:8,
         color1:'black',
         color2:'white',
+
+        is_Download:false,
       },
     }
   },
@@ -202,40 +207,50 @@ export default {
 
   methods: {
     show_icon() {
-      const number_of_canvas = 12;
-      for(let i=1; i<=number_of_canvas; i++) {
+      for(let i=1; i<= this.setting_icon.number_of_canvas; i++) {
         let icon = createIcon(i, this.setting_icon);
         this.icons_data[i] = icon;
       }   
     },
 
+    show_cross_evolution(icon_datas) {
+      for(let i=1; i<= this.setting_icon.number_of_canvas; i++) {
+        let icon = createIcon(i, this.setting_icon,icon_datas[i]);
+        this.icons_data[i] = icon;
+      }  
+    },
+
     select_icon:function(id) {
+      if(this.setting_icon.is_Download) {
+        return DownloadIcon(id);
+      }
+
       const action = this.action.is_action;
       if(action == "evolution") {
-        this.select_icon_evolution(id);
+        return this.select_icon_evolution(id);
       }
       if(action == "cross") {
-        this.select_icon_cross(id);
+        return this.select_icon_cross(id);
       }
       if(action == "cross_evolution") {
-        this.select_cross_evolution(id);
+        return this.select_cross_evolution(id);
       }
-      
     },
 
     select_action:function(action) {
       this.action.is_action = action;
       const is_action = action;
+      this.setting_icon.is_Download = false;
       if(is_action == "cross"){
-        this.action.cross.show = true;
+        return this.action.cross.show = true;
       }
       if(action == "evolution"){
-        this.action.evolution.show = true;
+        return this.action.evolution.show = true;
       }
       if(action == "cross_evolution"){
-        this.action.cross_evolution.show = true;
+        return this.action.cross_evolution.show = true;
       }
-      
+
     },
 
     select_icon_cross(id) {
@@ -252,7 +267,7 @@ export default {
 
     select_cross_evolution(id) {
       let count = this.action.cross_evolution.select_count %2;
-      this.cross_icon_data[count] = this.icons_data[id];
+      this.cross_evolution_data[count] = this.icons_data[id];
       this.$refs.cross_evolution.select_cross_evolution(count,this.icons_data[id]);
       this.action.cross_evolution.select_count += 1;
     },
@@ -267,6 +282,11 @@ export default {
       if(action == "cross_evolution"){
         this.action.cross_evolution.show = false;
       }
+    },
+
+    is_download(){
+      this.setting_icon.is_Download = true;
+      console.log(this.setting_icon.is_Download)
     },
 
 

@@ -67,3 +67,11 @@ export const createIcon = function(id, setting_icon, icon_data = []) {
     return return_icon;
 }
 
+export const DownloadIcon = function(id) {
+  const canvas = document.getElementById(id);
+  const link = document.createElement("a");
+  link.href = canvas.toDataURL("image/png");
+  link.download = "Pixel_icon.png";
+  link.click();
+}
+
