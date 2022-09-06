@@ -49,6 +49,7 @@
     :cross_evolution_data="cross_evolution_data"
     :setting_icon="setting_icon"
     @close = "close"
+    @cross_evolution = "show_cross_evolution"
   ></cross-evolution>
 
 
@@ -182,6 +183,7 @@ export default {
 
       //iconの設定情報
       setting_icon:{
+        number_of_canvas:12,
         canvas_length:100,
         pixel_number:8,
         color1:'black',
@@ -205,11 +207,17 @@ export default {
 
   methods: {
     show_icon() {
-      const number_of_canvas = 12;
-      for(let i=1; i<=number_of_canvas; i++) {
+      for(let i=1; i<= this.setting_icon.number_of_canvas; i++) {
         let icon = createIcon(i, this.setting_icon);
         this.icons_data[i] = icon;
       }   
+    },
+
+    show_cross_evolution(icon_datas) {
+      for(let i=1; i<= this.setting_icon.number_of_canvas; i++) {
+        let icon = createIcon(i, this.setting_icon,icon_datas[i]);
+        this.icons_data[i] = icon;
+      }  
     },
 
     select_icon:function(id) {
@@ -259,7 +267,7 @@ export default {
 
     select_cross_evolution(id) {
       let count = this.action.cross_evolution.select_count %2;
-      this.cross_icon_data[count] = this.icons_data[id];
+      this.cross_evolution_data[count] = this.icons_data[id];
       this.$refs.cross_evolution.select_cross_evolution(count,this.icons_data[id]);
       this.action.cross_evolution.select_count += 1;
     },
