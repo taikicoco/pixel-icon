@@ -16,14 +16,14 @@
     <button class="m-1 p-3 w-28 rounded-lg text-xs"
       v-on:click='select_action("cross")'
     >ガッタイ</button>
-    <button class="m-1 p-3 w-28 rounded-lg text-xs">
-        ガッタイシンカ
-    </button>
+    <button class="m-1 p-3 w-28 rounded-lg text-xs"
+      v-on:click='select_action("cross_evolution")'
+    >ガッタイシンカ</button>
   </div>
   <div class="flex flex-wrap justify-center m-5">
     <button class="m-1 p-3 w-28 rounded-lg text-xs"
     v-on:click='show_icon("cross")'
-    >サクセイ</button>
+    >ランダム</button>
     <button class="  m-1 p-3 w-28 rounded-lg text-xs">
         ダウンロード
     </button>
@@ -37,12 +37,19 @@
     @close = "close"
   ></cross-Icon>
 
-  <EvolutionIcon v-if="action.evolution.show"
+  <evolution-icon v-if="action.evolution.show"
     ref="evolution"
     :evolution_icon_data="evolution_icon_data"
     :setting_icon="setting_icon"
     @close = "close"
-  ></EvolutionIcon>
+  ></evolution-icon>
+
+  <cross-evolution v-if="action.cross_evolution.show"
+    ref="cross_evolution"
+    :cross_evolution_data="cross_evolution_data"
+    :setting_icon="setting_icon"
+    @close = "close"
+  ></cross-evolution>
 
 
 
@@ -130,14 +137,17 @@
 <script>
 import CrossIcon  from './components/CrossIcon.vue'
 import EvolutionIcon from './components/EvolutionIcon.vue'
+import CrossEvolution from './components/CrossEvolution.vue'
 
 import {createIcon} from './create_icon'
+
 
 export default {
   name: 'App',
   components: {
     CrossIcon,
     EvolutionIcon,
+    CrossEvolution,
 },
 
   data() {
@@ -145,6 +155,7 @@ export default {
       icons_data: [],
       cross_icon_data:[],
       evolution_icon_data:[],
+      cross_evolution_data:[],
 
       is_btn:{
         cross:false,
@@ -160,6 +171,10 @@ export default {
           show:false,
         },
         evolution:{
+          show:false,
+        },
+        cross_evolution:{
+          select_count:0,
           show:false,
         },
       },
@@ -199,9 +214,11 @@ export default {
       if(action == "evolution") {
         this.select_icon_evolution(id);
       }
-
       if(action == "cross") {
         this.select_icon_cross(id);
+      }
+      if(action == "cross_evolution") {
+        this.select_cross_evolution(id);
       }
       
     },
@@ -215,11 +232,10 @@ export default {
       if(action == "evolution"){
         this.action.evolution.show = true;
       }
+      if(action == "cross_evolution"){
+        this.action.cross_evolution.show = true;
+      }
       
-    },
-
-    show_action:function() {
-
     },
 
     select_icon_cross(id) {
@@ -234,12 +250,22 @@ export default {
       this.$refs.evolution.select_evolution_icon(this.icons_data[id]);
     },
 
+    select_cross_evolution(id) {
+      let count = this.action.cross_evolution.select_count %2;
+      this.cross_icon_data[count] = this.icons_data[id];
+      this.$refs.cross_evolution.select_cross_evolution(count,this.icons_data[id]);
+      this.action.cross_evolution.select_count += 1;
+    },
+
     close(action){
       if(action == "cross"){
         this.action.cross.show = false;
       }
       if(action == "evolution"){
         this.action.evolution.show = false;
+      }
+      if(action == "cross_evolution"){
+        this.action.cross_evolution.show = false;
       }
     },
 
