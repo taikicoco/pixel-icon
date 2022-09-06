@@ -4,7 +4,9 @@
       <span class="text-xl">Pixel icon</span>
     </div>
     <div class="absolute right-0 mr-6">
-      <button class="p-3 rounded-lg"><img class="h-8 w-8" src="./assets/settings.png" alt="setting"></button>
+      <button class="p-3 rounded-lg"
+      v-on:click='show_setting_modal()'
+      ><img class="h-8 w-8" src="./assets/settings.png" alt="setting"></button>
     </div>
   </nav>
 
@@ -51,6 +53,11 @@
     @close = "close"
     @cross_evolution = "show_cross_evolution"
   ></cross-evolution>
+
+  <setting-icon v-if="this.setting_icon.show_modal"
+    @hide_modal="hide_modal"
+    @change_setting="change_setting"
+  ></setting-icon>
 
 
 
@@ -139,6 +146,7 @@
 import CrossIcon  from './components/CrossIcon.vue'
 import EvolutionIcon from './components/EvolutionIcon.vue'
 import CrossEvolution from './components/CrossEvolution.vue'
+import SettingIcon from './components/SettingIcon.vue'
 
 import {createIcon} from './create_icon'
 import {DownloadIcon} from './create_icon'
@@ -150,6 +158,7 @@ export default {
     CrossIcon,
     EvolutionIcon,
     CrossEvolution,
+    SettingIcon,
 },
 
   data() {
@@ -190,6 +199,7 @@ export default {
         color2:'white',
 
         is_Download:false,
+        show_modal:false,
       },
     }
   },
@@ -218,6 +228,18 @@ export default {
         let icon = createIcon(i, this.setting_icon,icon_datas[i]);
         this.icons_data[i] = icon;
       }  
+    },
+
+    show_setting_modal() {
+      this.setting_icon.show_modal=true;
+    },
+    hide_modal() {
+      this.setting_icon.show_modal=false;
+    },
+
+    change_setting() {
+      this.setting_icon.color1 = 'red';
+      this.show_icon();
     },
 
     select_icon:function(id) {
