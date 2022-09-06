@@ -10,31 +10,46 @@
 
   <!-- action_btn -->
   <div class="flex flex-wrap justify-center m-5">
-    <button class="m-1 p-3 w-28 rounded-lg text-xs">
-      シンカ
-    </button>
-    <button class="m-1 p-3 w-28 rounded-lg text-xs">
-        ガッタイ
-    </button>
-    <button class="m-1 p-3 w-28 rounded-lg text-xs">
-        ガッタイシンカ
-    </button>
+    <button class="m-1 p-3 w-28 rounded-lg text-xs"
+      v-on:click='select_action("evolution")'
+    >シンカ</button>
+    <button class="m-1 p-3 w-28 rounded-lg text-xs"
+      v-on:click='select_action("cross")'
+    >ガッタイ</button>
+    <button class="m-1 p-3 w-28 rounded-lg text-xs"
+      v-on:click='select_action("cross_evolution")'
+    >ガッタイシンカ</button>
   </div>
   <div class="flex flex-wrap justify-center m-5">
-    <button class="m-1 p-3 w-28 rounded-lg text-xs">
-        サクセイ
-    </button>
+    <button class="m-1 p-3 w-28 rounded-lg text-xs"
+    v-on:click='show_icon("cross")'
+    >ランダム</button>
     <button class="  m-1 p-3 w-28 rounded-lg text-xs">
         ダウンロード
     </button>
   </div>
 
   <!-- show_action -->
-  <cross-Icon 
+  <cross-Icon v-if="action.cross.show"
     ref="cross"
-    :cross_icon="cross_icon"
+    :cross_icon_data="cross_icon_data"
     :setting_icon="setting_icon"
+    @close = "close"
   ></cross-Icon>
+
+  <evolution-icon v-if="action.evolution.show"
+    ref="evolution"
+    :evolution_icon_data="evolution_icon_data"
+    :setting_icon="setting_icon"
+    @close = "close"
+  ></evolution-icon>
+
+  <cross-evolution v-if="action.cross_evolution.show"
+    ref="cross_evolution"
+    :cross_evolution_data="cross_evolution_data"
+    :setting_icon="setting_icon"
+    @close = "close"
+  ></cross-evolution>
 
 
 
@@ -51,91 +66,120 @@
       id = 2
       :width = 'setting_icon.canvas_length'
       :height= 'setting_icon.canvas_length'
+      v-on:click='select_icon(2)'
     ></canvas>
     <canvas 
       id = 3
       :width = 'setting_icon.canvas_length'
       :height= 'setting_icon.canvas_length'
+      v-on:click='select_icon(3)'
     ></canvas>
     <canvas 
       id = 4
       :width = 'setting_icon.canvas_length'
       :height= 'setting_icon.canvas_length'
+      v-on:click='select_icon(4)'
     ></canvas>
     <canvas 
       id = 5
       :width = 'setting_icon.canvas_length'
       :height= 'setting_icon.canvas_length'
+      v-on:click='select_icon(5)'
     ></canvas>
     <canvas 
       id = 6
       :width = 'setting_icon.canvas_length'
       :height= 'setting_icon.canvas_length'
+      v-on:click='select_icon(6)'
     ></canvas>
     <canvas 
       id = 7
       :width = 'setting_icon.canvas_length'
       :height= 'setting_icon.canvas_length'
+      v-on:click='select_icon(7)'
     ></canvas>
     <canvas 
       id = 8
       :width = 'setting_icon.canvas_length'
       :height= 'setting_icon.canvas_length'
+      v-on:click='select_icon(8)'
     ></canvas>
     <canvas 
       id = 9
       :width = 'setting_icon.canvas_length'
       :height= 'setting_icon.canvas_length'
+      v-on:click='select_icon(9)'
     ></canvas>
     <canvas 
       id = 10
       :width = 'setting_icon.canvas_length'
       :height= 'setting_icon.canvas_length'
+      v-on:click='select_icon(10)'
     ></canvas>
     <canvas 
       id = 11
       :width = 'setting_icon.canvas_length'
       :height= 'setting_icon.canvas_length'
+      v-on:click='select_icon(11)'
     ></canvas>
     <canvas 
       id = 12
       :width = 'setting_icon.canvas_length'
       :height= 'setting_icon.canvas_length'
+      v-on:click='select_icon(12)'
     ></canvas>
 
   </div>
  
 
-  
 </template>
 
 <script>
 import CrossIcon  from './components/CrossIcon.vue'
+import EvolutionIcon from './components/EvolutionIcon.vue'
+import CrossEvolution from './components/CrossEvolution.vue'
 
 import {createIcon} from './create_icon'
+
 
 export default {
   name: 'App',
   components: {
     CrossIcon,
-  },
+    EvolutionIcon,
+    CrossEvolution,
+},
 
   data() {
     return {
-      icons_array: [],
+      icons_data: [],
+      cross_icon_data:[],
+      evolution_icon_data:[],
+      cross_evolution_data:[],
 
       is_btn:{
         cross:false,
         evolution:false,
-        cross_evolutioni:false,
+        cross_evolution:false,
         download:false,
         create:false,
       },
 
-      is_action:{
-
+      action:{
+        cross:{
+          select_count:0,
+          show:false,
+        },
+        evolution:{
+          show:false,
+        },
+        cross_evolution:{
+          select_count:0,
+          show:false,
+        },
       },
 
+      //iconの設定情報
       setting_icon:{
         canvas_length:100,
         pixel_number:8,
@@ -158,17 +202,71 @@ export default {
 
   methods: {
     show_icon() {
-      for(let i=1; i<=12; i++) {
+      const number_of_canvas = 12;
+      for(let i=1; i<=number_of_canvas; i++) {
         let icon = createIcon(i, this.setting_icon);
-        this.icons_array[i] = icon;
+        this.icons_data[i] = icon;
       }   
     },
 
     select_icon:function(id) {
-      //this.cross_icon[0] = this.icon[id];
-      console.log(id)
-      let a = [1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1];
-      this.$refs.cross.create_cross_icon(101,a);
+      const action = this.action.is_action;
+      if(action == "evolution") {
+        this.select_icon_evolution(id);
+      }
+      if(action == "cross") {
+        this.select_icon_cross(id);
+      }
+      if(action == "cross_evolution") {
+        this.select_cross_evolution(id);
+      }
+      
+    },
+
+    select_action:function(action) {
+      this.action.is_action = action;
+      const is_action = action;
+      if(is_action == "cross"){
+        this.action.cross.show = true;
+      }
+      if(action == "evolution"){
+        this.action.evolution.show = true;
+      }
+      if(action == "cross_evolution"){
+        this.action.cross_evolution.show = true;
+      }
+      
+    },
+
+    select_icon_cross(id) {
+      let cross_count = this.action.cross.select_count %2;
+      this.cross_icon_data[cross_count] = this.icons_data[id];
+      this.$refs.cross.select_cross_icon(cross_count,this.icons_data[id]);
+      this.action.cross.select_count += 1;
+    },
+
+    select_icon_evolution(id) {
+      this.evolution_icon_data[0] = this.icons_data[id];
+      this.$refs.evolution.select_evolution_icon(this.icons_data[id]);
+    },
+
+    select_cross_evolution(id) {
+      let count = this.action.cross_evolution.select_count %2;
+      this.cross_icon_data[count] = this.icons_data[id];
+      this.$refs.cross_evolution.select_cross_evolution(count,this.icons_data[id]);
+      this.action.cross_evolution.select_count += 1;
+    },
+
+    close(action){
+      if(action == "cross"){
+        this.action.cross.show = false;
+      }
+      if(action == "evolution"){
+        this.action.evolution.show = false;
+      }
+      if(action == "cross_evolution"){
+        this.action.cross_evolution.show = false;
+      }
     },
 
 
@@ -183,6 +281,8 @@ export default {
     box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
     border-radius: 15px;
     margin: 20px;
+    cursor: pointer;
+    cursor: hand;
   }
   button {
     box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
