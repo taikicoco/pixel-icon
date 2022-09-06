@@ -23,6 +23,7 @@
             <canvas id="103" 
                 :width = 'setting_icon.canvas_length' 
                 :height = 'setting_icon.canvas_length' 
+                v-on:click='select_icon(103)'
             ></canvas>
             </div>
 
@@ -38,6 +39,7 @@
 
 <script>
 import {createIcon} from '../create_icon'
+import {DownloadIcon} from '../create_icon'
 
     export default {
 
@@ -83,6 +85,12 @@ import {createIcon} from '../create_icon'
             close:function() {
                 this.$emit('close','cross')
             },
+
+            select_icon(id) {
+                if(this.setting_icon.is_Download) {
+                    DownloadIcon(id)
+                }
+            }
         }
     };
 

@@ -24,9 +24,9 @@
     <button class="m-1 p-3 w-28 rounded-lg text-xs"
     v-on:click='show_icon("cross")'
     >ランダム</button>
-    <button class="  m-1 p-3 w-28 rounded-lg text-xs">
-        ダウンロード
-    </button>
+    <button class="  m-1 p-3 w-28 rounded-lg text-xs"
+      v-on:click="is_download()"
+    >ダウンロード</button>
   </div>
 
   <!-- show_action -->
@@ -140,6 +140,7 @@ import EvolutionIcon from './components/EvolutionIcon.vue'
 import CrossEvolution from './components/CrossEvolution.vue'
 
 import {createIcon} from './create_icon'
+import {DownloadIcon} from './create_icon'
 
 
 export default {
@@ -185,6 +186,8 @@ export default {
         pixel_number:8,
         color1:'black',
         color2:'white',
+
+        is_Download:false,
       },
     }
   },
@@ -210,32 +213,36 @@ export default {
     },
 
     select_icon:function(id) {
+      if(this.setting_icon.is_Download) {
+        return DownloadIcon(id);
+      }
+
       const action = this.action.is_action;
       if(action == "evolution") {
-        this.select_icon_evolution(id);
+        return this.select_icon_evolution(id);
       }
       if(action == "cross") {
-        this.select_icon_cross(id);
+        return this.select_icon_cross(id);
       }
       if(action == "cross_evolution") {
-        this.select_cross_evolution(id);
+        return this.select_cross_evolution(id);
       }
-      
     },
 
     select_action:function(action) {
       this.action.is_action = action;
       const is_action = action;
+      this.setting_icon.is_Download = false;
       if(is_action == "cross"){
-        this.action.cross.show = true;
+        return this.action.cross.show = true;
       }
       if(action == "evolution"){
-        this.action.evolution.show = true;
+        return this.action.evolution.show = true;
       }
       if(action == "cross_evolution"){
-        this.action.cross_evolution.show = true;
+        return this.action.cross_evolution.show = true;
       }
-      
+
     },
 
     select_icon_cross(id) {
@@ -267,6 +274,11 @@ export default {
       if(action == "cross_evolution"){
         this.action.cross_evolution.show = false;
       }
+    },
+
+    is_download(){
+      this.setting_icon.is_Download = true;
+      console.log(this.setting_icon.is_Download)
     },
 
 
