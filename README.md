@@ -1,7 +1,7 @@
 # Pixel icon
 
 ```
-$ cd pixel icon
+$ cd pixel-icon
 $ npm run dev
 ```
 
