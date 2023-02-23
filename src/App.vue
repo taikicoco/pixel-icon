@@ -62,83 +62,17 @@
 
 
   <!-- show_cancas -->
-  <div class="flex flex-wrap justify-around m-8">
-    
-    <canvas 
-      id = 1
-      :width = 'setting_icon.canvas_length'
-      :height= 'setting_icon.canvas_length'
-      v-on:click='select_icon(1)'
+  <div class="flex justify-center">
+  <div class="flex flex-wrap justify-around m-8 max-w-2xl">
+    <canvas v-for="i in 12"
+      :key="i"
+      :id="i"
+      :width="setting_icon.canvas_length"
+      :height="setting_icon.canvas_length"
+      v-on:click="select_icon(i)"
     ></canvas>
-    <canvas 
-      id = 2
-      :width = 'setting_icon.canvas_length'
-      :height= 'setting_icon.canvas_length'
-      v-on:click='select_icon(2)'
-    ></canvas>
-    <canvas 
-      id = 3
-      :width = 'setting_icon.canvas_length'
-      :height= 'setting_icon.canvas_length'
-      v-on:click='select_icon(3)'
-    ></canvas>
-    <canvas 
-      id = 4
-      :width = 'setting_icon.canvas_length'
-      :height= 'setting_icon.canvas_length'
-      v-on:click='select_icon(4)'
-    ></canvas>
-    <canvas 
-      id = 5
-      :width = 'setting_icon.canvas_length'
-      :height= 'setting_icon.canvas_length'
-      v-on:click='select_icon(5)'
-    ></canvas>
-    <canvas 
-      id = 6
-      :width = 'setting_icon.canvas_length'
-      :height= 'setting_icon.canvas_length'
-      v-on:click='select_icon(6)'
-    ></canvas>
-    <canvas 
-      id = 7
-      :width = 'setting_icon.canvas_length'
-      :height= 'setting_icon.canvas_length'
-      v-on:click='select_icon(7)'
-    ></canvas>
-    <canvas 
-      id = 8
-      :width = 'setting_icon.canvas_length'
-      :height= 'setting_icon.canvas_length'
-      v-on:click='select_icon(8)'
-    ></canvas>
-    <canvas 
-      id = 9
-      :width = 'setting_icon.canvas_length'
-      :height= 'setting_icon.canvas_length'
-      v-on:click='select_icon(9)'
-    ></canvas>
-    <canvas 
-      id = 10
-      :width = 'setting_icon.canvas_length'
-      :height= 'setting_icon.canvas_length'
-      v-on:click='select_icon(10)'
-    ></canvas>
-    <canvas 
-      id = 11
-      :width = 'setting_icon.canvas_length'
-      :height= 'setting_icon.canvas_length'
-      v-on:click='select_icon(11)'
-    ></canvas>
-    <canvas 
-      id = 12
-      :width = 'setting_icon.canvas_length'
-      :height= 'setting_icon.canvas_length'
-      v-on:click='select_icon(12)'
-    ></canvas>
-
   </div>
- 
+</div>
 
 </template>
 
@@ -237,8 +171,8 @@ export default {
       this.setting_icon.show_modal=false;
     },
 
-    change_setting() {
-      this.setting_icon.color1 = 'red';
+    change_setting(value) {
+      this.setting_icon.color1 = value;
       this.show_icon();
     },
 
@@ -272,7 +206,6 @@ export default {
       if(action == "cross_evolution"){
         return this.action.cross_evolution.show = true;
       }
-
     },
 
     select_icon_cross(id) {
@@ -309,11 +242,7 @@ export default {
     is_download(){
       this.setting_icon.is_Download = true;
       console.log(this.setting_icon.is_Download)
-    },
-
-
-    
-
+    },    
   },
 }
 </script>

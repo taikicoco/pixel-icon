@@ -1,13 +1,24 @@
 <template>
-    <div class="overlay" @click.self="hide()" id="overlay">
-        <div class="flex justify-center bg-red-400 w-24 h-24">
-            <button class="m-1 p-3 w-28 rounded-lg text-xs "
-            v-on:click='change_setting()'
-            >RED</button>
-        </div>     
+  <div class="overlay" @click.self="hide()" id="overlay">
+    <div class="flex justify-center">
+      <div class="bg-white rounded-lg border border-gray-300">
+        <button class="m-1 p-3 w-28 rounded-lg text-xs" v-on:click='change_setting("black")'>
+          BRACK
+        </button>
+        <button class="m-1 p-3 w-28 rounded-lg text-xs" v-on:click='change_setting("red")'>
+          RED
+        </button>
+        <button class="m-1 p-3 w-28 rounded-lg text-xs" v-on:click='change_setting("blue")'>
+          BLUE
+        </button>
+        <button class="m-1 p-3 w-28 rounded-lg text-xs" v-on:click='change_setting("green")'>
+          GREEN
+        </button>
+      </div>
     </div>
-  </template>
-  
+  </div>
+</template>
+
   <script>
   export default {
     props: {
@@ -17,8 +28,8 @@
       hide() {
         this.$emit("hide_modal");
       },
-      change_setting() {
-        this.$emit("change_setting");
+      change_setting(value) {
+        this.$emit("change_setting", value);
         this.hide();
       },
     },
