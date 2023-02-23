@@ -1,6 +1,7 @@
 {
-  "name": "pixel-icon2",
+  "name": "pixel-icon",
   "version": "0.1.0",
+  "homepage": "./",
   "private": true,
   "scripts": {
     "dev": "vue-cli-service serve",
