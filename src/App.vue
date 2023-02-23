@@ -62,8 +62,9 @@
 
 
   <!-- show_cancas -->
-  <div class="flex flex-wrap justify-around m-8">
-    
+  <!-- <div class="flex flex-wrap justify-around m-8 max-w-2xl"> -->
+  <div class="flex justify-center">
+    <div class="flex flex-wrap justify-around m-8 max-w-2xl">
     <canvas 
       id = 1
       :width = 'setting_icon.canvas_length'
@@ -138,7 +139,8 @@
     ></canvas>
 
   </div>
- 
+  </div>
+  
 
 </template>
 
